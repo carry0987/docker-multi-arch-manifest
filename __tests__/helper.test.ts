@@ -5,7 +5,7 @@ import {
     extractDigest,
     globToRegex,
     parseAnnotations,
-    parseTags,
+    parseTags
 } from '../src/helper';
 
 describe('parseTags', () => {
@@ -53,10 +53,7 @@ describe('globToRegex', () => {
 describe('buildDigestRefs', () => {
     it('should build image@sha256:<basename> references', () => {
         const files = ['/tmp/digests/abc123', '/tmp/digests/def456'];
-        expect(buildDigestRefs('myimage', files)).toEqual([
-            'myimage@sha256:abc123',
-            'myimage@sha256:def456',
-        ]);
+        expect(buildDigestRefs('myimage', files)).toEqual(['myimage@sha256:abc123', 'myimage@sha256:def456']);
     });
 
     it('should return empty array for no files', () => {
@@ -69,16 +66,13 @@ describe('parseAnnotations', () => {
         const input = 'org.opencontainers.image.title=MyApp\norg.opencontainers.image.version=1.0';
         expect(parseAnnotations(input)).toEqual([
             'index:org.opencontainers.image.title=MyApp',
-            'index:org.opencontainers.image.version=1.0',
+            'index:org.opencontainers.image.version=1.0'
         ]);
     });
 
     it('should skip lines without =', () => {
         const input = 'valid=value\ninvalid line\nalso.valid=ok';
-        expect(parseAnnotations(input)).toEqual([
-            'index:valid=value',
-            'index:also.valid=ok',
-        ]);
+        expect(parseAnnotations(input)).toEqual(['index:valid=value', 'index:also.valid=ok']);
     });
 
     it('should trim whitespace from lines', () => {
@@ -97,33 +91,37 @@ describe('buildImagetoolsArgs', () => {
             'myimage',
             ['latest', 'v1.0'],
             ['index:key=value'],
-            ['myimage@sha256:abc123'],
+            ['myimage@sha256:abc123']
         );
         expect(result).toEqual([
-            'buildx', 'imagetools', 'create',
-            '-t', 'myimage:latest',
-            '-t', 'myimage:v1.0',
-            '--annotation', 'index:key=value',
-            'myimage@sha256:abc123',
+            'buildx',
+            'imagetools',
+            'create',
+            '-t',
+            'myimage:latest',
+            '-t',
+            'myimage:v1.0',
+            '--annotation',
+            'index:key=value',
+            'myimage@sha256:abc123'
         ]);
     });
 
     it('should work with no annotations', () => {
         const result = buildImagetoolsArgs('img', ['latest'], [], ['img@sha256:aaa']);
-        expect(result).toEqual([
-            'buildx', 'imagetools', 'create',
-            '-t', 'img:latest',
-            'img@sha256:aaa',
-        ]);
+        expect(result).toEqual(['buildx', 'imagetools', 'create', '-t', 'img:latest', 'img@sha256:aaa']);
     });
 
     it('should work with multiple digests', () => {
         const result = buildImagetoolsArgs('img', ['latest'], [], ['img@sha256:aaa', 'img@sha256:bbb']);
         expect(result).toEqual([
-            'buildx', 'imagetools', 'create',
-            '-t', 'img:latest',
+            'buildx',
+            'imagetools',
+            'create',
+            '-t',
+            'img:latest',
             'img@sha256:aaa',
-            'img@sha256:bbb',
+            'img@sha256:bbb'
         ]);
     });
 });
@@ -134,9 +132,7 @@ describe('extractDigest', () => {
 MediaType: application/vnd.oci.image.index.v1+json
 Digest:    sha256:abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890
 `;
-        expect(extractDigest(output)).toBe(
-            'sha256:abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890',
-        );
+        expect(extractDigest(output)).toBe('sha256:abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890');
     });
 
     it('should return null when no digest found', () => {
