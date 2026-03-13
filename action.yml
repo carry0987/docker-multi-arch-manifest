@@ -1,7 +1,5 @@
 name: Docker Multi-Arch Manifest
-description: >
-  Download digests from all platform builds, merge them into a multi-arch
-  manifest, tag the image, and optionally verify the result.
+description: Merge digests from platform builds into a multi-arch manifest, tag the image, and optionally verify.
 branding:
   icon: 'box'
   color: 'blue'
