@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://github.com/carry0987/docker-multi-arch-manifest/compare/v1.1.0...v1.2.0) (2026-03-13)
+
+
+### Features
+
+* update README.md ([f6a9c8e](https://github.com/carry0987/docker-multi-arch-manifest/commit/f6a9c8e1c34220133f1329e77f05359a16ca4a04))
+
 ## [1.1.0](https://github.com/carry0987/docker-multi-arch-manifest/compare/v1.0.0...v1.1.0) (2026-03-13)
 
 
