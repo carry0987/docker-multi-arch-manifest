@@ -1,18 +1,35 @@
-name: My Action
-description: 'TODO: Describe what your action does'
+name: Docker Multi-Arch Manifest
+description: >
+  Download digests from all platform builds, merge them into a multi-arch
+  manifest, tag the image, and optionally verify the result.
 branding:
-  icon: 'book'
+  icon: 'box'
   color: 'blue'
 
 inputs:
-  name:
-    description: 'TODO: Describe this input'
+  image:
+    description: 'Full image name (e.g. ghcr.io/org/app)'
     required: true
+  tags:
+    description: 'Tags to apply (multi-line, one per line)'
+    required: true
+  annotations:
+    description: 'OCI annotations (multi-line key=value format), applied at index level for GHCR metadata display'
+    required: false
+    default: ''
+  artifact-pattern:
+    description: 'Glob pattern for digest artifacts'
+    required: false
+    default: 'digests-*'
+  verify:
+    description: 'Whether to verify the manifest after creation'
+    required: false
+    default: 'true'
 
 outputs:
-  result:
-    description: 'TODO: Describe this output'
+  digest:
+    description: 'The digest of the multi-arch manifest'
 
 runs:
-  using: node20
+  using: node24
   main: dist/index.cjs

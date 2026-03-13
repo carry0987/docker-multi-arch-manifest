@@ -1,17 +1,20 @@
 {
-  "name": "ts-action-starter",
+  "name": "docker-multi-arch-manifest",
   "version": "0.0.0",
   "private": true,
   "type": "module",
   "scripts": {
     "build": "tsdown",
-    "typecheck": "tsc --noEmit",
     "test": "vitest run",
+    "typecheck": "tsc --noEmit",
     "lint": "biome check .",
     "lint:fix": "biome check --write ."
   },
   "dependencies": {
-    "@actions/core": "^3.0.0"
+    "@actions/artifact": "^6.2.1",
+    "@actions/core": "^3.0.0",
+    "@actions/exec": "^3.0.0",
+    "@actions/glob": "^0.6.1"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.4.6",
