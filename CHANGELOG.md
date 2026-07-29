@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.0](https://github.com/carry0987/docker-multi-arch-manifest/compare/v1.2.1...v1.3.0) (2026-07-29)
+
+
+### Features
+
+* add optional image normalization and strict repository validation ([b3446ad](https://github.com/carry0987/docker-multi-arch-manifest/commit/b3446add2ac481f23854127b81972bb81baac8fa))
+
 ## [1.2.1](https://github.com/carry0987/docker-multi-arch-manifest/compare/v1.2.0...v1.2.1) (2026-07-29)
 
 
