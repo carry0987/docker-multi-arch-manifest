@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.0](https://github.com/carry0987/docker-multi-arch-manifest/compare/v1.3.0...v1.4.0) (2026-07-29)
+
+
+### Features
+
+* Bump to v1.4.0 ([dd2bd76](https://github.com/carry0987/docker-multi-arch-manifest/commit/dd2bd7649a0686496c5c1cdc2dd6c532a3d56682))
+
 ## [1.3.0](https://github.com/carry0987/docker-multi-arch-manifest/compare/v1.2.1...v1.3.0) (2026-07-29)
 
 
