@@ -13,6 +13,10 @@ A GitHub Action that downloads per-platform digest artifacts, merges them into a
       1.0.0
 ```
 
+The `image` input is a repository name only. Provide tags via `tags`; values such as `ghcr.io/org/app:latest` and `ghcr.io/org/app@sha256:...` are rejected before `docker buildx` runs.
+
+If your repository source may include uppercase characters, such as `${{ github.repository }}`, enable `normalize` to lowercase the repository name before validation.
+
 ### Full example with docker-digest-builder
 
 ```yaml
@@ -50,6 +54,7 @@ jobs:
         id: manifest
         with:
           image: ghcr.io/${{ github.repository }}
+          normalize: true
           tags: |
             latest
             1.0.0
@@ -62,7 +67,8 @@ jobs:
 
 | Name | Required | Default | Description |
 |------|:--------:|---------|-------------|
-| `image` | Yes | — | Full image name (e.g. `ghcr.io/org/app`) |
+| `image` | Yes | — | Repository name only (e.g. `ghcr.io/org/app`); tags and digests are rejected |
+| `normalize` | No | `false` | Lowercase the repository name before validation |
 | `tags` | Yes | — | Tags to apply (multi-line, one per line) |
 | `annotations` | No | `''` | OCI annotations (multi-line `key=value`), applied at index level for GHCR metadata display |
 | `artifact-pattern` | No | `digests-*` | Glob pattern for digest artifacts |

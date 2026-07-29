@@ -6,8 +6,12 @@ branding:
 
 inputs:
   image:
-    description: 'Full image name (e.g. ghcr.io/org/app)'
+    description: 'Repository name only (e.g. ghcr.io/org/app); tags and digests are not allowed'
     required: true
+  normalize:
+    description: 'Lowercase the repository name before validation'
+    required: false
+    default: 'false'
   tags:
     description: 'Tags to apply (multi-line, one per line)'
     required: true

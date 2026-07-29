@@ -4,6 +4,7 @@ import {
     buildImagetoolsArgs,
     extractDigest,
     globToRegex,
+    normalizeImageName,
     parseAnnotations,
     parseTags
 } from '../src/helper';
@@ -58,6 +59,46 @@ describe('buildDigestRefs', () => {
 
     it('should return empty array for no files', () => {
         expect(buildDigestRefs('myimage', [])).toEqual([]);
+    });
+});
+
+describe('normalizeImageName', () => {
+    it('should accept valid repository names', () => {
+        expect(normalizeImageName('ghcr.io/my-org/my_app', false)).toBe('ghcr.io/my-org/my_app');
+        expect(normalizeImageName('docker.io/library/alpine', false)).toBe('docker.io/library/alpine');
+    });
+
+    it('should lowercase repository names when normalization is enabled', () => {
+        expect(normalizeImageName('GHCR.IO/Org/App', true)).toBe('ghcr.io/org/app');
+    });
+
+    it('should reject uppercase repository names when normalization is disabled', () => {
+        expect(() => normalizeImageName('GHCR.IO/Org/App', false)).toThrow(
+            'Image repository name must be lowercase unless normalize is enabled'
+        );
+    });
+
+    it('should reject repository names that include tags', () => {
+        expect(() => normalizeImageName('ghcr.io/org/app:latest', false)).toThrow(
+            'Image input must be a repository name only; tags are not allowed'
+        );
+    });
+
+    it('should reject repository names that include digests', () => {
+        expect(() => normalizeImageName('ghcr.io/org/app@sha256:abc', false)).toThrow(
+            'Image input must be a repository name only; digests are not allowed'
+        );
+    });
+
+    it('should reject invalid repository components', () => {
+        expect(() => normalizeImageName('ghcr.io/org/-app', false)).toThrow('Invalid image repository component: -app');
+    });
+
+    it('should allow registry ports while still rejecting tags', () => {
+        expect(normalizeImageName('localhost:5000/org/app', false)).toBe('localhost:5000/org/app');
+        expect(() => normalizeImageName('localhost:5000/org/app:latest', false)).toThrow(
+            'Image input must be a repository name only; tags are not allowed'
+        );
     });
 });
 

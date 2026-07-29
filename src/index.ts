@@ -8,6 +8,7 @@ import {
     buildImagetoolsArgs,
     extractDigest,
     globToRegex,
+    normalizeImageName,
     parseAnnotations,
     parseTags
 } from './helper';
@@ -15,11 +16,17 @@ import {
 async function run(): Promise<void> {
     try {
         // --- Read inputs ---
-        const image = core.getInput('image', { required: true });
+        const imageInput = core.getInput('image', { required: true });
         const tagsInput = core.getInput('tags', { required: true });
         const annotationsInput = core.getInput('annotations');
         const artifactPattern = core.getInput('artifact-pattern');
+        const normalizeImage = core.getBooleanInput('normalize');
         const verify = core.getBooleanInput('verify');
+
+        const image = normalizeImageName(imageInput, normalizeImage);
+        if (image !== imageInput.trim()) {
+            core.info(`Normalized image repository: ${image}`);
+        }
 
         // --- Parse tags ---
         const tags = parseTags(tagsInput);
